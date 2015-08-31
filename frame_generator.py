@@ -28,7 +28,7 @@ class FrameGenerator(object):
 		image =  numpy.fromstring(raw_image, dtype='uint8')
 		if self.bpp == 1:
 			image = image.reshape(self.meta['height'], self.meta['width'])
-		if self.bpp == 1:
+		else:
 			image = image.reshape(self.meta['height'], self.meta['width'], self.bpp)
 		self.pipe.stdout.flush()
 		# TODO: Determine safe finishing/done state
@@ -48,7 +48,7 @@ class FrameGenerator(object):
 	def _ffmpeg_format(self):
 		if(self.bpp == 1):
 			return 'gray'
-		if(eslf.bpp == 3):
+		if(self.bpp == 3):
 			return 'rgb24'
 		raise Exception('Unhandled byte depth: %d' %(self.bpp))
 
