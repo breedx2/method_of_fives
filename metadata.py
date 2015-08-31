@@ -24,8 +24,12 @@ class VideoMeta(object):
 
 	def _parse_meta(self, meta):
 		meta = self._to_dict(meta)
-		meta['fps'] = self._munge_rate(meta['avg_frame_rate'])
-		return meta
+		return dict(width=int(meta['width']), height=int(meta['height']),
+			duration=float(meta['duration']), fps=self._munge_rate(meta['avg_frame_rate']), 
+			avg_frame_rate=meta['avg_frame_rate'])
+		# [meta[x] = int(meta[x]) for x in ['width', 'height']]
+		# meta['fps'] = self._munge_rate(meta['avg_frame_rate'])
+		# return meta
 
 	def _to_dict(self, meta):
 		result = dict()

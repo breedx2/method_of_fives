@@ -1,6 +1,6 @@
 import sys
 import subprocess as sp
-#import numpy
+import numpy
 from metadata import VideoMeta
 
 FFMPEG_BIN = 'ffmpeg'
@@ -14,24 +14,48 @@ if len(sys.argv) < 2:
 	usage()
 
 meta = VideoMeta(FFPROBE_BIN).read(sys.argv[1])
-print "GOT RESULT: " 
+print("Video file metadata: ")
 for k,v in meta.items():
 	print("%s: %s" % (k,v))
-sys.exit(0)	# debuggery
+print("----------------------------")
 
-# filename = sys.argv[1]
+#sys.exit(0)	# debuggery
+
+filename = sys.argv[1]
 # width = sys.argv[2]
 # height = sys.argv[3]
 
-# command = [ FFMPEG_BIN,
-#             '-i', filename,
-#             '-f', 'image2pipe',
-#             '-pix_fmt', 'rgb24',
-#             '-vcodec', 'rawvideo', '-']
-# pipe = sp.Popen(command, stdout = sp.PIPE, bufsize=10**8)
+command = [ FFMPEG_BIN,
+            '-i', filename,
+            '-f', 'image2pipe',
+            '-pix_fmt', 'gray',
+            '-vcodec', 'rawvideo', '-']
+pipe = sp.Popen(command, stdout = sp.PIPE, bufsize=10**8)
 
-# # read 420*360*3 bytes (= 1 frame)
-# raw_image = pipe.stdout.read(420*360*3)
+# read 1 frame (assumes 3 bytes per pixel)
+# raw_image = pipe.stdout.read(meta['width'] * meta['height'] * 3)
+raw_image = pipe.stdout.read(meta['width'] * meta['height'] * 1) # 1 byte per pixel with pix_fmt gray
 
-# print("%d %d %d" % (raw_image[0],  raw_image[1], raw_image[2]));
+# Test that the frame looks right by saving it to a raw .data file
+# f = open('/tmp/outfile.data', 'w')
+# for i in range(0, meta['width'] * meta['height']):
+# 	f.write(raw_image[i])
+# 	f.write(raw_image[i])
+# 	f.write(raw_image[i])
+# f.close()
+
+image =  numpy.fromstring(raw_image, dtype='uint8')
+image = image.reshape((meta['height'], meta['width']))
+pipe.stdout.flush()
+
+f = open('/tmp/outfile.data', 'w')
+for y in range(0, meta['height']):
+	for x in range(0, meta['width']):
+		f.write(chr(image[y, x]))
+		f.write(chr(image[y, x]))
+		f.write(chr(image[y, x]))
+f.close()
+
+
+# print(">>>>>>>>>>>>>>>>>>> %d %d %d" % (image[212,210,0], image[212,210,1], image[210,212,2]))
 
