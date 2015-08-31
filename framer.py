@@ -16,21 +16,20 @@ if len(sys.argv) < 2:
 
 filename = sys.argv[1]
 
-framegen = FrameGenerator.build(FFPROBE_BIN, FFMPEG_BIN, filename, 3)
+framegen = FrameGenerator.build(FFPROBE_BIN, FFMPEG_BIN, filename, 1)
 
 print("Video file metadata: ")
 for k,v in framegen.meta.items():
 	print("%s: %s" % (k,v))
 print("----------------------------")
 
-
-
-for i in range(0,10):
-	image = framegen.next()
+i = 0
+for image in framegen:
 	f = open('/tmp/outfile%d.data' % (i), 'w')
 	for y in range(0, image.shape[0]):	# height
 		for x in range(0, image.shape[1]):
-			f.write(chr(image[y, x, 0]))
-			f.write(chr(image[y, x, 1]))
-			f.write(chr(image[y, x, 2]))
+			f.write(chr(image[y, x]))
+			f.write(chr(image[y, x]))
+			f.write(chr(image[y, x]))
 	f.close()
+	i = i + 1
