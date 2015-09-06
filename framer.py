@@ -3,7 +3,7 @@ import subprocess as sp
 import numpy
 from metadata import VideoMeta
 from frame_generator import FrameGenerator
-from image_analyze import average, compute_averages
+from image_analyze import average, compute_averages, slice_averages
 
 FFMPEG_BIN = 'ffmpeg'
 FFPROBE_BIN = 'ffprobe'
@@ -30,8 +30,9 @@ dx = width / 5
 dy = height / 5
 slices = []
 for image in framegen:
-	sums = compute_averages(image, dx, dy)
-	print(sums)
+	# sums = compute_averages(image, dx, dy)
+	averages = slice_averages(image)
+	print(averages)
 
 	# def slice_dx(x):
 	# 	start = x*dx
