@@ -26,14 +26,14 @@ class FrameGenerator(object):
 		self._lazy_init()
 		raw_image = self.pipe.stdout.read(self.meta['width'] * self.meta['height'] * self.bpp)
 		image =  numpy.fromstring(raw_image, dtype='uint8')
+		if len(image) == 0:
+			print("No more frames to read.")
+			raise StopIteration()
 		if self.bpp == 1:
 			image = image.reshape(self.meta['height'], self.meta['width'])
 		else:
 			image = image.reshape(self.meta['height'], self.meta['width'], self.bpp)
 		self.pipe.stdout.flush()
-		# TODO: Determine safe finishing/done state
-		if(False):
-			raise StopIteration()
 		return image
 
 	def _lazy_init(self):

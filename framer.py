@@ -24,11 +24,25 @@ for k,v in framegen.meta.items():
 	print("%s: %s" % (k,v))
 print("----------------------------")
 
-width = framegen.meta['width']
-height = framegen.meta['height']
-dx = width / 5
-dy = height / 5
-slices = []
+dx = framegen.meta['width'] / 5
+dy = framegen.meta['height'] / 5
+frames = []
 for image in framegen:
 	averages = slice_averages(image)
-	print(averages)
+	# print(averages)
+	frames.append(averages)
+
+print("Data collected for %d frames!" %(len(frames)))
+
+def write_files(frames, file_prefix, index):
+	for i in range(0,5):
+		filename = '%s%d.raw' %(file_prefix, i)
+		print("Writing data to %s" %(filename))
+		f = open(filename, 'wb')
+		for pair in frames:
+			f.write(pair[index][i])
+		f.close()
+		print("Done writing %s" %(filename))
+
+write_files(frames, 'x', 0)
+write_files(frames, 'y', 1)
