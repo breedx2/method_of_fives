@@ -2,6 +2,8 @@
 
 An A/V work derived from a chance occurrence.
 
+https://vimeo.com/150093420
+
 # Artist Statement
 
 Here in the future, a staggering overabundance of media/data leads us to develop a form of technological molybdomancy.  Experience is now forever shaped by memetic constructs never materialized in a physical world.
