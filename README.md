@@ -1,6 +1,11 @@
 # Method of Fives
 
-An A/V work derived from a chance occurrence 
+An A/V work derived from a chance occurrence.
+
+# Artists Statement
+
+Here in the future, a staggering overabundance of media/data leads us to develop a form of technological molybdomancy.  Experience is now forever shaped by memetic constructs never materialized in a physical world.
+The working mind is deeply susceptible to pareidolia, and this phenomenon is purposefully exploited with abstract storytelling.
 
 ![screenshot1](https://raw.githubusercontent.com/breedx2/method_of_fives/master/snaps/thumbs/method_of_fives_01.png)
 ![screenshot2](https://raw.githubusercontent.com/breedx2/method_of_fives/master/snaps/thumbs/method_of_fives_08.png)
